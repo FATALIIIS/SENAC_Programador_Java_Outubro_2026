@@ -1,0 +1,282 @@
+SQL - STRUCTURED QUERY LANGUAGE
+Linguagem de Consulta Estruturada
+RESUMO - POSTGRESQL
+
+========================================================
+LINGUAGENS SQL
+========================================================
+
+DDL - Data Definition Language
+CREATE, ALTER, DROP
+
+DML - Data Manipulation Language
+INSERT, UPDATE, DELETE
+
+DQL - Data Query Language
+SELECT
+
+DCL - Data Control Language
+GRANT, REVOKE
+
+DTL - Data Transaction Language
+COMMIT, ROLLBACK
+
+
+========================================================
+PARTE 1 - DDL / DML
+========================================================
+
+1) EXCLUINDO UM BANCO DE DADOS
+
+DROP DATABASE <nome>;
+
+EX:
+DROP DATABASE academia;
+
+
+========================================================
+2) CRIANDO O BANCO DE DADOS
+========================================================
+
+CREATE DATABASE <nome>;
+
+EX:
+CREATE DATABASE estoque;
+
+*** NO POSTGRESQL, A CRIAÇÃO DO BANCO NÃO USA
+COLLATE utf8mb4_general_ci COMO NO MYSQL.
+
+
+========================================================
+3) CRIANDO UMA TABELA
+========================================================
+
+CREATE TABLE <nome>(
+    <nome_chave> <tipo> <nulo?> PRIMARY KEY,
+    <campo1> <tipo> <nulo?>,
+    ...
+    <campoN> <tipo> <nulo?>
+);
+
+EX:
+
+CREATE TABLE fabricante(
+    cod_fab integer NOT NULL PRIMARY KEY,
+    nome varchar(30),
+    endereco varchar(50),
+    cnpj bigint NOT NULL UNIQUE,
+    telefone varchar(14),
+    cidade varchar(30)
+);
+
+
+****** CHAVE ESTRANGEIRA
+
+FOREIGN KEY(coluna) REFERENCES <tabela>(chave)
+
+EX:
+
+CREATE TABLE produto(
+    cod_pro integer NOT NULL PRIMARY KEY,
+    cod_fab integer NOT NULL,
+    nome varchar(60),
+    descricao text,
+    quantidade integer,
+    valor numeric(6,2),
+    data_fab date,
+    FOREIGN KEY(cod_fab) REFERENCES fabricante(cod_fab)
+);
+
+
+========================================================
+4) INSERINDO DADOS
+========================================================
+
+INSERT INTO <tabela>(campo1,campo2,...)
+VALUES (valor1,valor2,...);
+
+EX:
+
+INSERT INTO produto(
+    cod_pro,cod_fab,nome,descricao,quantidade,valor,data_fab
+)
+VALUES
+(
+    1,2,'Presunto Defumado',
+    'Presunto Defumado fatiado Sabia Premium 180g',
+    23,13.49,'2026-07-01'
+),
+(
+    2,1,'Blusa Esportiva Xadrez',
+    'Blusa de algodão, modelo esportivo na cor xadrez',
+    10,29.47,'2026-07-06'
+);
+
+
+========================================================
+5) RENOMEANDO UMA TABELA
+========================================================
+
+ALTER TABLE <velho_nome> RENAME TO <novo_nome>;
+
+EX:
+
+ALTER TABLE fabricante RENAME TO fabricantes;
+
+
+========================================================
+6) EXCLUINDO UMA TABELA
+========================================================
+
+*** EXCLUI PERMANENTEMENTE A TABELA E SEUS DADOS.
+
+DROP TABLE <nome_tabela>;
+
+EX:
+
+DROP TABLE produto;
+
+
+========================================================
+7) INSERINDO DADOS NA TABELA
+========================================================
+
+INSERT INTO <tabela> VALUES (valor1,valor2,...);
+
+*** É NECESSÁRIO INFORMAR OS VALORES DE TODAS AS COLUNAS
+NA ORDEM DEFINIDA PELA TABELA.
+
+OU
+
+INSERT INTO <tabela>(campo1,campo2,...)
+VALUES (valor1,valor2,...);
+
+EX:
+
+INSERT INTO fabricante
+VALUES
+(
+    1,
+    'Empresa C&A',
+    'Rua X, nº 993',
+    12345678,
+    '(41)3223-4956',
+    'Curitiba'
+);
+
+
+========================================================
+TIPOS DE DADOS MAIS USADOS NO POSTGRESQL
+========================================================
+
+NÚMEROS
+
+smallint
+integer       1   23   -7
+bigint
+
+numeric(p,s)  123.58
+real
+double precision
+
+
+TEXTO
+
+char(n)
+varchar(n)    'texto'
+text
+
+
+DATA E HORA
+
+date          '2026-07-06'
+time          '13:24:00'
+timestamp     '2026-07-06 14:39:00'
+
+
+*** NO POSTGRESQL, O TIPO datetime NÃO É USADO.
+USE timestamp.
+
+
+========================================================
+8) ADICIONANDO UMA COLUNA NA TABELA
+========================================================
+
+ALTER TABLE <nome_tabela>
+ADD COLUMN <campo> <tipo>;
+
+EX:
+
+ALTER TABLE produto
+ADD COLUMN validade date;
+
+*** NO POSTGRESQL NÃO EXISTE AFTER PARA ESCOLHER
+A POSIÇÃO FÍSICA DA NOVA COLUNA.
+
+
+========================================================
+9) RENOMEANDO UMA COLUNA
+========================================================
+
+ALTER TABLE <nome_tabela>
+RENAME COLUMN <velho_nome> TO <novo_nome>;
+
+EX:
+
+ALTER TABLE produto
+RENAME COLUMN validade TO data_val;
+
+
+========================================================
+10) MUDANDO O TIPO DE UMA COLUNA
+========================================================
+
+ALTER TABLE <nome_tabela>
+ALTER COLUMN <coluna> TYPE <tipo>;
+
+EX:
+
+ALTER TABLE produto
+ALTER COLUMN data_fab TYPE date;
+
+
+========================================================
+11) EXCLUINDO UMA COLUNA
+========================================================
+
+ALTER TABLE <nome_tabela>
+DROP COLUMN <coluna>;
+
+EX:
+
+ALTER TABLE produto
+DROP COLUMN data_val;
+
+
+========================================================
+12) ATUALIZANDO UM VALOR EM UMA COLUNA
+========================================================
+
+UPDATE <tabela>
+SET <campo>=<valor>
+WHERE <campo_ref>=<referência>;
+
+EX:
+
+UPDATE fabricante
+SET cidade='Ponta Grossa',
+    telefone='(42)3226-4545'
+WHERE cod_fab=1;
+
+
+========================================================
+13) EXCLUINDO UM REGISTRO DA TABELA
+========================================================
+
+DELETE FROM <tabela>
+WHERE <campo_ref>=<valor>;
+
+EX:
+
+DELETE FROM produto
+WHERE cod_pro=2;
