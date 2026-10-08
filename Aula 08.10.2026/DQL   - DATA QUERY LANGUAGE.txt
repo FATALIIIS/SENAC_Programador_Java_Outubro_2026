@@ -1,0 +1,205 @@
+DQL   - DATA QUERY LANGUAGE 
+LINGUAGEM DE CONSULTA DE DADOS
+--------------------------------------
+
+1) Selecionar todos os campos
+
+SELECT * FROM <tabela>;
+Ex:
+select * from curso;
+------------------------------------------
+2) Selecionar alguns campos
+
+SELECT (<coluna1>,<coluna2>,...) FROM <tabela>
+Ex:
+select nome,telefone from aluno;
+
+------------------------------------------
+3) Usando uma condição
+
+SELECT <campos...> FROM <tabela> WHERE <condição>
+
+****Operadores
+> Maior     
+< Menor   
+>= maior igual 
+<= menor ou igual   
+<> diferente
+in()  está em
+between (entre)
+and  E      
+or OU
+
+-mostre os alunos que são de ponta grossa
+
+select nome,cidade from aluno 
+where cidade='Ponta Grossa';
+
+-mostre os cursos cuja duração é maior que 400 horas
+
+select nome,duracao from curso 
+where duracao > 400;
+
+- mostre as turmas cujo período está em 1 ou 3 ou 5
+
+ select codTur,periodo from turma 
+where periodo in(1,3,5);
+
+
+- mostre os alunos que nasceram entre 1980-01-01
+e 2000-12-31
+select nome,nascimento from aluno
+where nascimento between '1980-01-01' and 
+'2000-12-31';
+
+
+-mostre os alunos cujo nome começa com G
+
+select nome from aluno where nome like 'G%';
+
+
+-*****LIKE
+
+LIKE 'chocolate%'   ->começa com chocolate
+LIKE '%chocolate'   ->termina com chocolate
+LIKE '%chocolate%'  ->Tem chocolate em qualquer posição
+
+
+----------------------------------------------------------------
+4) Funções
+
+count() - contar
+avg() - media
+max() - maior
+min() - menor
+sum() - soma
+
+
+SELECT <função>() AS "rótulo" FROM <tabela>
+
+- conte o número do alunos
+select count(matricula) as "nº total de alunos"
+from aluno;
+
+-conte os alunos de ponta grossa
+
+select count(matricula) as "nº total de alunos PG"
+from aluno where cidade='Ponta Grossa';
+
+-some a duração total dos cursos
+select sum(duracao) as "duração total horas"
+from curso;
+
+-----------------------------------------------------------------
+
+5) Subconsultas
+
+SELECT <campos...> FROM <tabela> 
+WHERE <campo> <operação> (SELECT <campo> FROM
+<tabela> WHERE <condição>
+
+-mostre o nome dos alunos de Enfermagem
+
+select nome from aluno where codCur=
+(select codCur from curso where 
+nome like 'Enfermagem');
+
+/* mostre a sala do curso de enfermagem */
+select sala from turma where codCur=
+(select codCur from curso where 
+nome like 'Enfermagem');
+
+------------------------------------------------------------------
+
+6) Junção 
+Quando necessita de colunas/atributos de tabelas diferentes em um único resultado
+
+SELECT a.<campoa>, b.<campob> FROM <tabelaa> a JOIN <tabelab> b
+
+ON a.<chave> = b.<chave>
+OU
+USING (<chave>)
+
+****OPCIONAL
+WHERE <condição>
+
+
+-mostre o nome dos alunos e seus respectivos cursos ordenados
+por nome
+
+select a.nome as "aluno",c.nome as "curso"
+from aluno a join curso c
+on a.codCur=c.codCur
+order by aluno;
+
+-mostre o nome do aluno, sua sala e seu período 
+ordenados por aluno
+
+select a.nome as "aluno",t.sala,t.periodo 
+from aluno a join turma t
+on a.codTur=t.codTur
+order by aluno;
+
+-mostre o nome do aluno,telefone, turma e o curso
+
+select a.nome as "aluno",a.telefone,
+t.codTur,c.nome as "curso" from
+aluno a join turma t on a.codTur=t.codTur
+join curso c on t.codCur=c.codCur
+order by aluno;
+
+-conte os alunos por curso
+
+select count(a.matricula) as "total alunos",c.nome as "curso"
+from aluno a join curso c 
+on a.codCur=c.codCur
+group by curso;
+
+
+!!  OBS -> para usar funções com JOIN é preciso
+usar GROUP BY ("agrupar por")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
