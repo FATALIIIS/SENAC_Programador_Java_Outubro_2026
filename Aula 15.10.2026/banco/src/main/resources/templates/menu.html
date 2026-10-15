@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head th:replace="~{cabecalho :: cabecalho}">
+	</head>
+	<body>
+		<section class="topo" th:fragment="topo">
+			<div id="logo">
+				<a th:href="@{/}"><img th:src="@{/img/logo.jpeg}"></a>
+			</div>
+			<div id="menu">
+				<div id="busca">
+					<form th:action="@{/buscar}" method="get">
+						<input type="search" name="busca" pattern="[a-zA-Z0-9çÇãÃéÉíÍóÓúÚ]{1,30}"required>
+						<button type="submit">Buscar</button>	
+					</form>
+				</div>
+				<div id="botoes">
+					<ul class="nav" th:if="${session.admin==null}">
+						<li><a th:href="@{/login}">Entrar</a></li>
+					</ul>
+					<ul class="nav" th:if="${session.admin!=null}">
+						<span id="welcome" th:text="${'Olá '+session.admin.nome}">Usuário</span>
+						&nbsp;
+						<li>Fabricante
+							<ol>
+								<li><a th:href="@{/fabricante/cadastrar}">Cadastrar</a></li>
+								<li><a th:href="@{/fabricante/listar}">Listar</a></li>
+								<li><a th:href="@{/fabricante/buscar}">Buscar</a></li>
+							</ol>
+						</li>
+						<li>Produto
+							<ol>
+								<li><a th:href="@{/produto/cadastrar}">Cadastrar</a></li>
+								<li><a th:href="@{/produto/listar}">Listar</a></li>
+								<li><a th:href="@{/produto/buscar}">Buscar</a></li>
+							</ol>
+						</li>
+						<li><a th:href="@{/logoff}">Sair</a></li>
+					</ul>
+				</div>					
+			</div>
+			
+		</section>
+	</body>
+</html>
