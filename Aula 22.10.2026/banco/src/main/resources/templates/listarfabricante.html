@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xlmns:th="http://thymeleaf.org">
+	<head th:replace="~{cabecalho :: cabecalho}">
+	</head>
+	<body>
+		<section th:replace="~{menu :: topo}"></section>
+		<div th:if="${total<=0}">Não há fabricantes cadastrados!</div>
+		<div th:if="${total>0}">
+		<table>
+			<tr>
+				<th>Código</th>
+				<th>Nome</th>
+				<th>CNPJ</th>
+				<th>Endereço</th>
+				<th>Telefone</th>
+			</tr>
+			<tr th:each="fabricante:${fabricantes}">
+				<td th:text="${fabricantes.codFab}">Código</td>
+				<td th:text="${fabricantes.nome}">Nome</td>
+				<td th:text="${fabricantes.cnpj}">CNPJ</td>
+				<td th:text="${fabricantes.endereco}">Endereço</td>
+				<td th:text="${fabricantes.telefone}">Telefone</td>
+			</tr>
+		</table>
+		<div style="margin-top: 15px;display: flex;justify-content: center;">
+			<span th:if="${paginaAtual>0}">
+				<a th:href="@{/fabricante/listar(page=${paginaAtual-1})}">
+					Anterior
+				</a>
+			</span>
+			<span>Pagina <span th:text="${paginaAtual+1}">Atual+1</span>de <span th:text="${totalPaginas}">1</span></span>
+			<span th:if="${paginaAtual+1 <totalPaginas}">
+				<a th:href="@{/fabricante/listar(page=${paginaAtual+1})}">
+					Próxima
+				</a>
+			</span>
+		</div>
+		</div>
+	</body>
+</html>
