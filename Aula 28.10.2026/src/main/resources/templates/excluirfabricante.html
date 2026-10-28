@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head th:replace="~{cabecalho :: cabecalho}">
+	</head>
+	<body>
+		<section th:replace="~{menu :: topo}"></section>
+		<form th:action="@{/fabricante/excluir}" method="post" id="formulario">
+			<input type="hidden" name="codFab" th:value="${fabricante.codFab}">
+			<h1>Excluir</h1>
+			<p>Tem certeza que deseja excluir o</p>
+			<h2 th:text="${fabricante.nome}">nome</h2>
+			<button type="submit">Sim</button>
+			<button><a th:href="@{/fabricante/buscar}">Não</a></button>
+		</form>
+		<section th:if="${resposta!=null}">
+			<h2 th:text="${resposta}">Erro</h2>
+		</section>
+	</body>
+</html>
