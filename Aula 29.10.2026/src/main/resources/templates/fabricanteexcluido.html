@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head th:replace="~{cabecalho :: cabecalho}">
+	</head>
+	<body>
+		<session th:replace="~{menu :: topo}"></session>
+		<section class="voltar">
+			<h2 th:if="${resposta}">Fabricante excluido com sucesso!</h2>
+			<span class="botao-pag"><a th:href="@{/fabricante/buscar}">Voltar</a></span>
+		</section>		
+	</body>
+</html>

@@ -1,0 +1,176 @@
+*{
+	margin:0px;
+	padding: 0px;
+	font-family: "Constantia";
+}
+:root{
+	--botao:rgb(192, 192, 192);
+	--destaque:white;
+	--letrabotao:black;
+	--fundo:rgb(0, 255, 64);
+	--titulo:#F20505;
+	--letra:black;
+	--fonte:"Constantia";
+}
+section{
+	display: flex;
+	justify-content: center;
+}
+section.topo{
+	width: 100vw;
+	height: 10vh;
+	background-color: var(--fundo);
+}
+#logo{
+	width: 10%;
+	height: 100%;
+}
+#logo img{
+	width: auto;
+	height: auto;
+	max-width: 100%;
+	max-height: 100%;
+}
+#menu{
+	width: 90%;
+	height: 100%;
+	display: flex;
+}
+#busca{
+	width: 25%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+#busca form input[type=search]{
+	border-radius:16px;
+	height: 120%;
+	background-color: rgb(128, 128, 255);
+}
+#botoes{
+	width: 75%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+ul.nav{
+	padding: 0;
+	margin: 0;
+	width: 90%;
+	height: 30%;
+	list-style-type: none;
+	display: flex;
+}
+ul.nav li{
+	position: relative;
+	width: 13%;
+	margin-left: 6%;
+	padding-top: 0;
+	background-color: var(--botao);
+	cursor:pointer;
+	border-radius: 16px;
+	border: 2px solid var(--titulo);
+	text-align: center;
+	color: var(--letrabotao);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+ul.nav li a{
+	color: var(--letrabotao);
+	display: black;
+	font-size:1.2vw;
+	text-decoration: none;
+}
+#formulario{
+	width: 60vw;
+	margin-left: 20vw;
+	height: auto;
+	margin-top: 10vh;
+	background-color: var(--fundo);
+	color: var(--letra);
+	text-align: center;
+	border: 1px solid var(--titulo);
+	border-radius:16px;
+}
+#formulario input[type=submit],#formulario button{
+	width: 20%;
+	background-color:var(--botao);
+	border:2px solid var(--titulo);
+	border-radius:16px;
+	font-size:1.2vw;
+	margin-top:2%;
+	margin-bottom:2%;
+}
+h2{
+	display: flex;
+	justify-content: center;
+	font-size:1.3vw;
+	color: var(--titulo);
+}
+ul.nav li ol{
+	display: none;
+	list-style-type: none;
+	width: 100%;
+	position: absolute;
+	top: 100%;
+	left: 0;
+	border-top: 0px;
+}
+ul.nav li ol li{
+	width: 100%;
+	position: relative;
+	top: 0;
+	left: 0;
+	border-top: 0px;
+	margin-left: 0%;
+	margin-top: 1.5%;
+}
+ul.nav li:hover ol{
+	display: block;
+}
+table{
+	width: 80vw;
+	margin-left: 10vw;
+	margin-top: 10vh;
+	height: auto;
+	border: 2px ridge var(--fundo);
+}
+table th{
+	background-color: var(--botao);
+	border: 1px solid var(--titulo);
+	color: var(--letrabotao);
+}
+table td{
+	border-bottom:1px solid lightgrey;
+	color:var(--letra);
+	text-align: center;
+}
+span.botao-pag{
+	background-color: var(--botao);
+	border: 1px solid var(--titulo);
+	color: var(--letrabotao);
+	margin-left: 10px;
+	margin-right: 10px;
+}
+span.botao-pag a{
+	text-decoration: none;
+	color:black;
+}
+span.texto-pag{
+	border: 1px solid rgb(255, 0, 0);
+	background-color: var(--botao);
+}
+button a{
+	width: 100%;
+	display: block;
+	text-decoration: none;
+	color: black;
+}
+section.voltar{
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}

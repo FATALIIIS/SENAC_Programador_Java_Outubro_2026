@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head th:replace="~{cabecalho :: cabecalho}">
+	</head>
+	<body>
+		<section th:replace="~{menu :: topo}"></section>
+		<form th:action="@{/fabricante/buscar}" method="get" id="formulario">
+			<select name="campo">
+				<option value="nome" th:selected="${campo =='nome'}">Nome</option>
+				<option value="codigo" th:selected="${campo =='codigo'}">Código</option>
+				<option value="telefone" th:selected="${campo =='telefone'}">Telefone</option>
+				<option value="cnpj" th:selected="${campo =='cnpj'}">CNPJ</option>
+				<option value="endereco" th:selected="${campo =='endereco'}">Endereço</option>
+			</select>
+			<input type="text" name="valor" th:value="${valor}" placeholder="Digite a busca...">
+			<button type="submit">Buscar</button>
+		</form>
+		<h2 th:if="${total<=0}">Nenhum resultado encontrado!</h2>
+		<div th:if="${total>0}">
+			<span th:text="${debug}"></span>
+			<table>
+				<tr>
+					<th>Código</th>
+					<th>Nome</th>
+					<th>CNPJ</th>
+					<th>Endereço</th>
+					<th>Telefone</th>
+					<th>Alterar?</th>
+					<th>Excluir?</th>
+				</tr>
+				<tr th:each="fabricante:${fabricantes}">
+					<td th:text="${fabricante.codFab}">Código</td>
+					<td th:text="${fabricante.nome}">Nome</td>
+					<td th:text="${fabricante.cnpj}">CNPJ</td>
+					<td th:text="${fabricante.endereco}">Endereço</td>
+					<td th:text="${fabricante.telefone}">Telefone</td>
+					<td><a th:href="@{/fabricante/alterar(codFab=${fabricante.codFab})}">Sim</a></td>
+					<td><a th:href="@{/fabricante/excluir(codFab=${fabricante.codFab})}">Sim</a></td>
+					</tr>
+			</table>
+			<div style="margin-top: 15px;display: flex;justify-content: center;">
+				<span class="botao-pag" th:if="${paginaAtual>0}">
+					<a th:href="@{/fabricante/buscar(page=${paginaAtual-1})}">
+						Anterior
+					</a>
+				</span>
+				<span class="texto-pag">Página <span th:text="${paginaAtual+1}">Atual+1</span> de <span th:text="${totalPaginas}">1</span></span>
+				<span class="botao-pag" th:if="${paginaAtual+1 <totalPaginas}">
+					<a th:href="@{/fabricante/buscar(page=${paginaAtual+1})}">
+						Próxima
+					</a>
+				</span>
+			</div>
+		</div>
+	</body>
+</html>
