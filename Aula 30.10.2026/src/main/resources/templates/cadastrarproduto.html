@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head th:replace="~{cabecalho :: cabecalho}">
+	</head>
+	<body>
+		<section th:replace="~{menu :: topo}"></section>
+		<form th:unless="${#lists.isEmpty(fabricantes)}" th:action="@{/produto/cadastrar}" th:object="${produto}" method="post" id="formulario" enctype="multipart/form-data">
+			<h1>Cadastrar Produto</h1>
+			<label for="nome">Nome do Produto:</label><br>
+			<input type="text" th:field="*{nome}" size="50" max="50" required><br>
+			<label for="fabricante">Fabricante:</label><br>
+			<select th:field="*{fabricante}" required>
+				<option th:each="fab: ${fabricantes}" th:value="${fab.codFab}" th:text="${fab.nome}"></option>	
+			</select><br>
+			<label for="descricao">Descrição:</label><br>
+			<textarea th:field="*{descricao}" cols="100" rows="4" maxlength="600"></textarea><br>
+			<label for="preco">Preço Unitário:</label><br>
+			R$<input type="number" th:field="*{preco}" min="0.01" max="9999.99" step="0.01" required><br>
+			<label for="quantidade">Quantidade:</label><br>
+			<input type="number" th:field="*{quantidade}" min="0" max="9999" step="1" required><br>
+			<label for="foto">Foto do Produto:</label><br>
+			<input type="file" id="foto" name="foto" accept="png,jpg,jpeg,bmp,gif" required><br>
+			<button type="submit">Cadastrar</button>	
+		</form>
+		<h2 th:if="${#lists.isEmpty(fabricantes)}">Não há fabricantes cadastrados! Cadastre-os primeiro.</h2>
+		<section th:if="${resposta!=null}">
+			<h2 th:text="${resposta}">resposta</h2>
+		</section>
+	</body>
+</html>

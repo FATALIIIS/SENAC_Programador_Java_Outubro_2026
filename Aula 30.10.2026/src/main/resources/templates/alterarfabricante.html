@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head th:replace="~{cabecalho :: cabecalho}">
+	</head>
+	<body>
+		<section th:replace="~{menu :: topo}"></section>
+		<form th:action="@{/fabricante/alterar}" th:object="${fabricante}" method="post" id="formulario">
+			<input type="hidden" name="codFab" th:value="${fabricante.codFab}">
+			<h1>Alterar Fabricantes</h1>
+			<label for="nome">Nome:</label><br>
+			<input type="text" th:field="*{nome}" size="40" maxlength="40" required><br>
+			<label for="cnpj">CNPJ: </label><br>
+			<input type="text" th:field="*{cnpj}" size="17" maxlength="17" required><br>
+			<label for="endereco">Endereço:</label><br>
+			<input type="text" th:field="*{endereco}" size="70" maxlength="70" required><br>
+			<label for="telefone">Telefone:</label><br>
+			<input type="text" th:field="*{telefone}" size="14" maxlength="14" required><br>
+			<button type="submit">Alterar</button>
+		</form>
+		<section th:if="${resposta!=null and resposta!=''}">
+			<h2 th:text="${resposta}">resposta</h2>
+			<meta http-equiv="refresh" th:content="'3;'+'url='+@{/fabricante/buscar}">
+		</section>
+	</body>
+</html>
